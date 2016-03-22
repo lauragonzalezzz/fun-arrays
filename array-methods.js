@@ -25,11 +25,11 @@ var hundredThousandairs = dataset.filter(function(balance) {
   assign the resulting array to `roundedDollar`
 */
 var roundedDollar = dataset.map(function(account) {
-  return {
-    amount: dataset.amount,
-    state: dataset.state,
-    rounded : Math.round(dataset.amount)
-  }
+    return {
+      amount : account.amount,
+      state : account.state,
+      rounded : Math.round(account.amount)
+    }
 })
 
 /*
@@ -42,7 +42,12 @@ var roundedDollar = dataset.map(function(account) {
     }
   assign the resulting array to `roundedDime`
 */
-var roundedDime = null;
+var roundedDime = dataset.map(function(account) {
+  return {
+    amount : Number(Math.round(account.amount * 10)/10),
+    state : account.state
+  }
+});
 
 // set sumOfBankBalances to the sum of all amounts in bankBalances
 var sumOfBankBalances = null;
