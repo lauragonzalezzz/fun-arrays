@@ -174,7 +174,24 @@ allTheStates.forEach(function(account) {
   where the sum of amounts in the state is
     less than 1,000,000
  */
-var lowerSumStates = null;
+var lowerSumStates = [];
+var allLowerStates = dataset;
+
+allLowerStates.forEach(function(account) {
+  var total = Number(account.amount);
+  if (allLowerStates[account.state] && allLowerStates[account.amount] < 1000000) {
+    allLowerStates[account.state] += total;
+  }
+  else if (allLowerStates[account.amount] < 1000000){
+    allLowerStates[account.state] = total;
+  }
+});
+
+allLowerStates.forEach(function(account) {
+  lowerSumStates.push(allLowerStates[account.state]);
+});
+
+
 
 /*
   set higherStateSums to be the sum of 
