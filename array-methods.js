@@ -144,11 +144,6 @@ consolidatedAccountsArr.forEach(function(state) {
   }
 })
 
-// var sumOfHighInterests = consolidatedAccountsArr.reduce(function(prev, account) {
-//   total = Math.round(prev * 10)/10 + Math.round(account.amount);
-//   return total;
-// }, 0);
-
 /*
   aggregate the sum of bankBalance amounts
   grouped by state
@@ -157,7 +152,21 @@ consolidatedAccountsArr.forEach(function(state) {
     and the value is the sum of all amounts from that state
       the value must be rounded to the nearest cent
  */
-var stateSums = null;
+
+var stateSums = {};
+var allTheStates = dataset;
+
+allTheStates.forEach(function(account) {
+  var total = Number(account.amount);
+  if (stateSums[account.state]) {
+    stateSums[account.state] += total;
+  }
+  else {
+    stateSums[account.state] = total;
+  }
+  total.toFixed(2);
+});
+
 
 /*
   set lowerSumStates to an array containing

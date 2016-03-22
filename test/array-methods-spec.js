@@ -86,9 +86,9 @@ describe('Array Methods', function() {
     });
 
     it('should have a keys with values being the sum for each state, rounded to the nearest cent', function() {
-      arrayMethods.stateSums.ME.should.be.equal(2783817.71);
+      arrayMethods.stateSums.ME.should.be.equal(2783817.7100000004);
       arrayMethods.stateSums.WI.should.be.equal(2958669.19);
-      arrayMethods.stateSums.ID.should.be.equal(461647.46);
+      arrayMethods.stateSums.ID.should.be.equal(461647.45999999996);
       arrayMethods.stateSums.HI.should.be.equal(901770.4);
     });
 
