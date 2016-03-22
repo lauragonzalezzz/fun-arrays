@@ -5,6 +5,7 @@ var dataset = require('./dataset.json').bankBalances;
   greater than 100000.00
   assign the resulting array to `hundredThousandairs`
 */
+console.log('dataset', dataset)
 var hundredThousandairs = dataset.filter(function(balance) {
   if (Number(balance.amount) > 100000.00) {
     return true;
@@ -31,7 +32,6 @@ var roundedDollar = dataset.map(function(account) {
       rounded : Math.round(account.amount)
     }
 })
-
 /*
   set a the `amount` value for each object in bankBalances
   to the value of `amount` rounded to the nearest 10 cents
@@ -42,6 +42,7 @@ var roundedDollar = dataset.map(function(account) {
     }
   assign the resulting array to `roundedDime`
 */
+// console.log('dataset',dataset);
 var roundedDime = dataset.map(function(account) {
   return {
     amount : Number(Math.round(account.amount * 10)/10),
@@ -50,7 +51,7 @@ var roundedDime = dataset.map(function(account) {
 });
 
 // set sumOfBankBalances to the sum of all amounts in bankBalances
-
+// console.log('dataset',dataset);
 var sumOfBankBalances = dataset.reduce(function(prev, account) {
   return Math.round(prev *10)/10 + Math.round((account.amount)*10)/10;
 }, 0);
@@ -77,13 +78,13 @@ var correctStates = dataset.filter(function(account) {
   return account;
   }
 });
-
+console.log('correctStates',correctStates);
 var sumOfInterests = correctStates.reduce(function(prev, account) {
   total = Math.round(prev + (account.amount * .189));
   return total;
 
 }, 0);
-
+console.log('sumOfInterests',sumOfInterests);
 /*
   set sumOfHighInterests to the sum of the 18.9% interest
   for all amounts in bankBalances
@@ -121,10 +122,8 @@ myStates.forEach(function(account) {
   }
 });
 
-var stateKey = Object.keys(consolidatedAccounts);
 var consolidatedAccountsArr = [];
-
-stateKey.forEach(function(state) {
+Object.keys(consolidatedAccounts).forEach(function(state) {
   
   var eachAccount = {};
     
@@ -154,9 +153,8 @@ consolidatedAccountsArr.forEach(function(state) {
  */
 
 var stateSums = {};
-var allTheStates = dataset;
 
-allTheStates.forEach(function(account) {
+var allTheStates = dataset.forEach(function(account) {
   var total = Number(account.amount);
   if (stateSums[account.state]) {
     stateSums[account.state] += total;
@@ -175,21 +173,22 @@ allTheStates.forEach(function(account) {
     less than 1,000,000
  */
 var lowerSumStates = [];
-var allLowerStates = dataset;
 
-allLowerStates.forEach(function(account) {
-  var total = Number(account.amount);
-  if (allLowerStates[account.state] && allLowerStates[account.amount] < 1000000) {
-    allLowerStates[account.state] += total;
+
+var allLowerStates = dataset.map(function(account) {
+  var newTotal = Number(account.amount);
+  if (account.state) {
+    account.state += newTotal;
   }
-  else if (allLowerStates[account.amount] < 1000000){
-    allLowerStates[account.state] = total;
-  }
+  // else if (allLowerStates[account.amount] < 1000000){
+  //   allLowerStates[account.state] = newTotal;
+  // }
 });
 
-allLowerStates.forEach(function(account) {
-  lowerSumStates.push(allLowerStates[account.state]);
-});
+
+// allLowerStates.forEach(function(account) {
+//   lowerSumStates.push(allLowerStates[account.state]);
+// });
 
 
 
