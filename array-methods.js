@@ -100,37 +100,54 @@ var sumOfInterests = correctStates.reduce(function(prev, account) {
  */
 
 var myStates = dataset.filter(function(account) {
-  if (account.state !== 'WI' ||
-  account.state !== 'IL' ||
-  account.state !== 'WY' ||
-  account.state !== 'OH' ||
-  account.state !== 'GA' ||
+  if (account.state !== 'WI' &&
+  account.state !== 'IL' &&
+  account.state !== 'WY' &&
+  account.state !== 'OH' &&
+  account.state !== 'GA' &&
   account.state !== 'DE') {
   return account;
   }
 });
 
-var addInterests = myStates.map(function(account) {
-  total = Math.round(account.amount) + (account.amount * .189);
-
-  return {
-    amount : account.amount,
-    state : account.state,
-    interest : total
+var consolidatedAccounts = {};
+myStates.forEach(function(account) {
+  var total = Number(account.amount);
+  if (consolidatedAccounts[account.state]) {
+    consolidatedAccounts[account.state] += total;
+  }
+  else {
+    consolidatedAccounts[account.state] = total;
   }
 });
 
-var stateObj = {
-  WI : 0
-}
+var stateKey = Object.keys(consolidatedAccounts);
+var consolidatedAccountsArr = [];
 
-addInterests.forEach(function(account) {
-  if (stateObj.hasOwnProperty(account.state)) {
-    stateObj.state += 
+stateKey.forEach(function(state) {
+  
+  var eachAccount = {};
+    
+  eachAccount[state] = state;
+  eachAccount['amount'] = consolidatedAccounts[state];
+  return consolidatedAccountsArr.push(eachAccount);
+
+});
+
+var sumOfHighInterests = 0;
+consolidatedAccountsArr.forEach(function(state) {
+
+  var stateInterest = state.amount * 0.189;
+  if (stateInterest > 50000) {
+    sumOfHighInterests += stateInterest;
+    sumOfHighInterests = Math.round(sumOfHighInterests*100)/100;
   }
 })
 
-var sumOfHighInterests = null;
+// var sumOfHighInterests = consolidatedAccountsArr.reduce(function(prev, account) {
+//   total = Math.round(prev * 10)/10 + Math.round(account.amount);
+//   return total;
+// }, 0);
 
 /*
   aggregate the sum of bankBalance amounts
