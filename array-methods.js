@@ -50,7 +50,10 @@ var roundedDime = dataset.map(function(account) {
 });
 
 // set sumOfBankBalances to the sum of all amounts in bankBalances
-var sumOfBankBalances = null;
+
+var sumOfBankBalances = dataset.reduce(function(prev, account) {
+  return Math.round(prev *10)/10 + Math.round((account.amount)*10)/10;
+}, 0);
 
 /*
   set sumOfInterests to the sum of the 18.9% interest
@@ -64,7 +67,22 @@ var sumOfBankBalances = null;
     Delaware
   the result should be rounded to the nearest cent
  */
-var sumOfInterests = null;
+var correctStates = dataset.filter(function(account) {
+  if (account.state === 'WI' ||
+  account.state === 'IL' ||
+  account.state === 'WY' ||
+  account.state === 'OH' ||
+  account.state === 'GA' ||
+  account.state === 'DE') {
+  return account;
+  }
+});
+
+var sumOfInterests = correctStates.reduce(function(prev, account) {
+  total = Math.round(prev + (account.amount * .189));
+  return total;
+
+}, 0);
 
 /*
   set sumOfHighInterests to the sum of the 18.9% interest
@@ -80,6 +98,38 @@ var sumOfInterests = null;
     Delaware
   the result should be rounded to the nearest cent
  */
+
+var myStates = dataset.filter(function(account) {
+  if (account.state !== 'WI' ||
+  account.state !== 'IL' ||
+  account.state !== 'WY' ||
+  account.state !== 'OH' ||
+  account.state !== 'GA' ||
+  account.state !== 'DE') {
+  return account;
+  }
+});
+
+var addInterests = myStates.map(function(account) {
+  total = Math.round(account.amount) + (account.amount * .189);
+
+  return {
+    amount : account.amount,
+    state : account.state,
+    interest : total
+  }
+});
+
+var stateObj = {
+  WI : 0
+}
+
+addInterests.forEach(function(account) {
+  if (stateObj.hasOwnProperty(account.state)) {
+    stateObj.state += 
+  }
+})
+
 var sumOfHighInterests = null;
 
 /*
